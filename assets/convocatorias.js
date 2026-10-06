@@ -26,17 +26,13 @@ window.CILIS_CONVOCATORIAS = [
     "title": "Letrozol versus citrato de clomifeno sobre la respuesta ovárica y la receptividad endometrial en pacientes con SOMP/SOP: una revisión sistemática y metaanálisis de 1565 pacientes",
     "kind": "Revisión sistemática y metaanálisis",
     "abstract": "Introducción: El síndrome ovárico poliendocrino-metabólico (SOMP), es una causa frecuente de infertilidad anovulatoria, el citrato de clomifeno y letrozol son utilizados para mejorar el proceso de ovulación, sus efectos sobre la respuesta folicular y la receptividad endometrial pueden diferir según el mecanismo de acción. El objetivo fue comparar letrozol vs citrato de clomifeno frente a la respuesta endometrial, hormonal y ovárica en mujeres con SOMP. Metodología: Se realizo una revisión sistemática y metaanálisis de ensayos clínicos aleatorizados (ECAs). Se realizaron búsquedas en PubMed, ScienceDirect y CENTRAL Cochrane desde 2004 hasta 2026. El desenlace primario fue el grosor endometrial para estimar diferencia de medias (DM) e intervalos de confianza (IC95%); la heterogeneidad se evaluó mediante I² y prueba Q de Cochran. Resultados: Se incluyeron 14 ECAs con un total de 1565 pacientes. El metaanálisis mostró un mayor grosor endometrial con letrozol en comparación con CC (DM=1,27 mm; IC95%: 0,47 a 2,08; p=0,002; I²=98%) y un mayor diámetro de folículo dominante (DM=3,40 mm; IC95%: 0,44 a 6,35; p=0,02; I²=48%), no se observaron diferencias estadísticamente significativas en el número de folículos maduros, estradiol sérico ni progesterona en fase lútea. Conclusiones: El letrozol mostro mejores resultados en relación al grosor endometrial y desarrollo folicular dominante que el citrato de clomifeno no se observaron diferencias significativas en los demás parámetros evaluados.",
-    "source": "Abstract y dos versiones de flyer adjuntos por el usuario el 1 de octubre de 2026.",
+    "source": "Abstract adjunto el 1 de octubre y flyer PubMed/Springer Nature adjunto el 6 de octubre de 2026.",
     "complete": true,
     "keywords": "Síndrome de ovario poliquístico, letrozol, citrato de clomifeno, infertilidad anovulatoria.",
     "flyers": [
       {
-        "src": "assets/convocatorias/letrozol-es.jpeg",
-        "label": "Flyer en español"
-      },
-      {
-        "src": "assets/convocatorias/letrozol-en.jpeg",
-        "label": "Flyer en inglés"
+        "src": "assets/convocatorias/letrozol-pubmed.jpeg",
+        "label": "Flyer PubMed / Springer Nature"
       }
     ],
     "abstractImage": "assets/convocatorias/abstract-letrozol.jpeg"
