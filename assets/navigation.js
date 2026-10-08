@@ -16,8 +16,9 @@ if (menuToggle && navigation) {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
-if (document.body.classList.contains('page-home') && location.hash === '#nosotros') {
-  location.replace('nosotros.html');
+if (document.body.classList.contains('page-home')) {
+  if (location.hash === '#nosotros') location.replace('nosotros.html');
+  if (location.hash === '#academy') location.replace('academy.html');
 }
 
 const prefersLessMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
