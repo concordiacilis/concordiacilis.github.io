@@ -66,3 +66,6 @@
 .brand-copy{display:flex;flex-direction:column;gap:3px;min-width:0}.brand-subline{display:block;max-width:268px;color:rgba(18,54,77,.62);font:600 10px/1.3 'DM Sans',sans-serif;letter-spacing:.01em}.team-portrait{box-shadow:0 20px 42px rgba(0,0,0,.16)}.team-grid .team-member{border-top-color:var(--blue)}
 @media(max-width:1100px){.nav-shell{height:auto;min-height:88px;padding-block:7px}.main-nav{top:100%}}
 @media(max-width:600px){.site-header .brand-subline{max-width:170px;font-size:9px;line-height:1.2}.footer-brand .brand-subline{max-width:220px}}
+
+/* Barra de ocupación para las convocatorias. */
+.call-capacity{margin-top:22px}.call-capacity-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:9px;color:var(--muted);font-size:.82rem}.call-capacity-heading strong{color:var(--navy);font:800 .95rem/1.3 Manrope,sans-serif;white-space:nowrap}.call-capacity-track{height:11px;overflow:hidden;border-radius:999px;background:#dbe7ee}.call-capacity-fill{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--green),var(--blue))}.call-availability{font-weight:700;color:var(--green-dark)}

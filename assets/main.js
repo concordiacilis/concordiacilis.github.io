@@ -74,13 +74,29 @@ if (callsGrid && abstractDialog) {
       card.append(cover);
     }
     card.append(element('p', 'call-type', call.kind), element('h3', 'call-title', call.shortTitle));
+    const filled = Math.min(call.slotsTotal, Math.max(0, call.slotsFilled));
+    const remaining = call.slotsTotal - filled;
+    const capacity = element('div', 'call-capacity');
+    const capacityHeading = element('div', 'call-capacity-heading');
+    capacityHeading.append(element('span', '', 'Cupos ocupados'), element('strong', '', `${filled}/${call.slotsTotal}`));
+    const capacityTrack = element('div', 'call-capacity-track');
+    capacityTrack.setAttribute('role', 'progressbar');
+    capacityTrack.setAttribute('aria-label', `Cupos ocupados para ${call.shortTitle}`);
+    capacityTrack.setAttribute('aria-valuemin', '0');
+    capacityTrack.setAttribute('aria-valuemax', String(call.slotsTotal));
+    capacityTrack.setAttribute('aria-valuenow', String(filled));
+    const capacityFill = element('span', 'call-capacity-fill');
+    capacityFill.style.width = `${filled / call.slotsTotal * 100}%`;
+    capacityTrack.append(capacityFill);
+    capacity.append(capacityHeading, capacityTrack);
+    card.append(capacity);
     const preview = element('div', 'call-preview');
     const previewInner = element('div', 'call-preview-inner');
     const previewText = element('div', 'call-preview-text');
     appendAbstract(previewText, call);
     previewInner.append(previewText); preview.append(previewInner);card.append(preview);
     const footer = element('div', 'call-card-footer');
-    footer.append(element('span', 'call-availability', 'Consultar disponibilidad'), element('span', 'call-read', call.complete ? 'Leer abstract' : 'Ver información'));
+    footer.append(element('span', 'call-availability', remaining ? `${remaining} ${remaining === 1 ? 'cupo disponible' : 'cupos disponibles'}` : 'Sin cupos disponibles'), element('span', 'call-read', call.complete ? 'Leer abstract' : 'Ver información'));
     card.append(footer);
     card.addEventListener('click', () => {
       if (!window.getSelection().toString().trim()) openAbstract(call, card);

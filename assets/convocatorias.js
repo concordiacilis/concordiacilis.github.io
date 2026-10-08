@@ -1,8 +1,10 @@
 // Contenido de los flyers y abstracts proporcionados por CILIS.
-// Los originales se conservan para consulta. No se infieren cupos, precios ni resultados.
+// Los originales se conservan para consulta. Los cupos reflejan los datos comunicados por CILIS.
 window.CILIS_CONVOCATORIAS = [
   {
     "id": "jak-alopecia",
+    "slotsFilled": 9,
+    "slotsTotal": 9,
     "area": "Dermatología · Medicina interna",
     "shortTitle": "Inhibidores JAK en alopecia areata",
     "title": "Inhibidores orales de las quinasas Janus en la alopecia areata moderada a grave: un metaanálisis actualizado en la era del upadacitinib",
@@ -21,6 +23,8 @@ window.CILIS_CONVOCATORIAS = [
   },
   {
     "id": "letrozol-clomifeno",
+    "slotsFilled": 5,
+    "slotsTotal": 8,
     "area": "Ginecología · Medicina interna",
     "shortTitle": "Letrozol frente a citrato de clomifeno",
     "title": "Letrozol versus citrato de clomifeno sobre la respuesta ovárica y la receptividad endometrial en pacientes con SOMP/SOP: una revisión sistemática y metaanálisis de 1565 pacientes",
@@ -39,6 +43,8 @@ window.CILIS_CONVOCATORIAS = [
   },
   {
     "id": "inositol-gonadotropinas",
+    "slotsFilled": 0,
+    "slotsTotal": 9,
     "area": "Ginecología · Medicina interna",
     "shortTitle": "Inositol y función gonadotrópica",
     "title": "Efecto del inositol sobre la función gonadotrópica en mujeres con síndrome ovárico metabólico poliendócrino (SOMP/SOP): una revisión sistemática y metaanálisis en 396 pacientes",
@@ -56,6 +62,8 @@ window.CILIS_CONVOCATORIAS = [
   },
   {
     "id": "cpap-inflamacion",
+    "slotsFilled": 0,
+    "slotsTotal": 9,
     "area": "Otorrinolaringología · Medicina interna",
     "shortTitle": "CPAP y biomarcadores inflamatorios",
     "title": "Impact of Continuous Positive Airway Pressure on Systemic Inflammatory Biomarkers in Obstructive Sleep Apnea: A Systematic Review and Meta-Analysis",
@@ -72,6 +80,8 @@ window.CILIS_CONVOCATORIAS = [
   },
   {
     "id": "arn-lipoproteina",
+    "slotsFilled": 0,
+    "slotsTotal": 9,
     "area": "Cardiología · Medicina interna",
     "shortTitle": "Terapias de ARN y lipoproteína(a)",
     "title": "Efficacy of RNA-Targeted Therapies for Lipoprotein(a) Reduction in Adults at High Cardiovascular Risk: An Updated Systematic Review and Meta-analysis",
