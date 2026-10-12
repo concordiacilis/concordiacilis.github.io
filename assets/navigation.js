@@ -13,12 +13,37 @@ if (menuToggle && navigation) {
     menuToggle.setAttribute('aria-label', 'Abrir menú');
   }));
 }
+
+const archiveDropdown = document.querySelector('.nav-dropdown');
+const archiveMenuToggle = document.querySelector('.archive-menu-toggle');
+if (archiveDropdown && archiveMenuToggle) {
+  archiveMenuToggle.addEventListener('click', () => {
+    const open = archiveMenuToggle.getAttribute('aria-expanded') !== 'true';
+    archiveMenuToggle.setAttribute('aria-expanded', String(open));
+    archiveDropdown.classList.toggle('is-open', open);
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      archiveDropdown.classList.remove('is-open');
+      archiveMenuToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
 if (document.body.classList.contains('page-home')) {
   if (location.hash === '#nosotros') location.replace('nosotros.html');
   if (location.hash === '#academy') location.replace('academy.html');
+  if (location.hash === '#archivo') location.replace('archivo.html');
+  if (location.hash === '#convocatorias-anteriores') location.replace('convocatorias-anteriores.html');
+  if (location.hash === '#congresos-anteriores') location.replace('congresos-anteriores.html');
+}
+
+if (location.pathname.endsWith('/archivo.html')) {
+  if (location.hash === '#convocatorias-anteriores') location.replace('convocatorias-anteriores.html');
+  if (location.hash === '#congresos-anteriores') location.replace('congresos-anteriores.html');
 }
 
 const prefersLessMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
