@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3554"><meta name="description" content="Editor privado de investigaciones CILIS.">
+  <title>Redactar investigación | CILIS Research</title>
+  <link rel="icon" type="image/jpeg" href="assets/cilis-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css"><link rel="stylesheet" href="assets/plataforma.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3" defer></script>
+  <script src="assets/auth-config.js" defer></script><script src="assets/auth-client.js" defer></script><script src="assets/redactar.js" defer></script>
+</head>
+<body class="platform-page editor-page">
+  <a class="skip-link" href="#editor-main">Saltar al contenido</a>
+  <header class="platform-header"><div class="platform-header-inner">
+    <a class="platform-brand" href="cuenta.html" aria-label="Volver a mis investigaciones"><img src="assets/cilis-logo.jpg" alt="" width="52" height="52"><span><strong>CILIS RESEARCH</strong><small>Editor de investigaciones</small></span></a>
+    <div class="editor-header-actions"><span id="save-indicator" role="status" aria-live="polite">Preparando editor...</span><a href="cuenta.html">Salir del editor ↗</a></div>
+  </div></header>
+  <div id="editor-loading" class="platform-container editor-loading" role="status">Comprobando tu sesión...</div>
+  <div id="editor-app" class="editor-shell" hidden>
+    <aside class="editor-sidebar" aria-label="Apartados de la investigación">
+      <div class="editor-sidebar-head"><span>REDACCIÓN</span><strong id="sidebar-title">Nueva investigación</strong><small id="sidebar-progress">Paso 1 de 9</small></div>
+      <nav id="editor-steps" aria-label="Pasos de redacción"></nav>
+      <div class="editor-sidebar-foot"><span class="status-pill borrador" id="editor-status-pill">Borrador</span><p>Tu investigación es privada y solo se comparte con CILIS al enviarla.</p></div>
+    </aside>
+    <main id="editor-main" class="editor-main">
+      <div class="editor-topline"><a href="cuenta.html">← Mis investigaciones</a><span id="step-counter">01 / 09</span></div>
+      <div class="editor-content">
+        <p class="platform-kicker" id="step-eyebrow">PASO 01</p>
+        <h1 id="step-title">Tipo de artículo</h1>
+        <p id="step-description" class="editor-description"></p>
+        <form id="research-form" novalidate>
+          <div id="step-fields"></div>
+          <p id="form-message" class="platform-message" role="status" aria-live="polite" hidden></p>
+          <div class="editor-actions"><button type="button" id="previous-button" class="platform-secondary">← Anterior</button><div><button type="button" id="save-button" class="platform-secondary">Guardar borrador</button><button type="submit" id="next-button" class="platform-primary">Guardar y continuar →</button></div></div>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
