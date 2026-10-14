@@ -4,6 +4,7 @@ const loginAvailability = document.getElementById('login-availability');
 const passwordInput = document.getElementById('login-password');
 const passwordToggle = document.querySelector('.login-password-toggle');
 const loginClient = window.cilisAuth?.client;
+const destinationFor = user => user?.app_metadata?.cilis_role === 'revisor_admin' ? 'revisor.html' : 'cuenta.html';
 
 function showLoginStatus(message) {
   loginStatus.textContent = message;
@@ -28,7 +29,7 @@ if (loginForm && loginStatus) {
     loginForm.querySelectorAll('input, button').forEach(control => { control.disabled = false; });
     loginAvailability.hidden = true;
     loginClient.auth.getUser().then(({ data }) => {
-      if (data.user) location.replace(new URL('cuenta.html', location.href));
+      if (data.user) location.replace(new URL(destinationFor(data.user), location.href));
     }).catch(() => {});
 
     loginForm.addEventListener('submit', async event => {
@@ -38,7 +39,7 @@ if (loginForm && loginStatus) {
       submit.disabled = true;
       loginStatus.hidden = true;
       try {
-        const { error } = await loginClient.auth.signInWithPassword({
+        const { data, error } = await loginClient.auth.signInWithPassword({
           email: loginForm.elements.namedItem('email').value.trim(),
           password: passwordInput.value
         });
@@ -48,7 +49,7 @@ if (loginForm && loginStatus) {
             : 'No pudimos iniciar sesión. Comprueba tu correo y contraseña.');
           return;
         }
-        location.assign(new URL('cuenta.html', location.href));
+        location.assign(new URL(destinationFor(data.user), location.href));
       } catch (_) {
         showLoginStatus('No se pudo conectar con el servicio. Inténtalo de nuevo.');
       } finally {

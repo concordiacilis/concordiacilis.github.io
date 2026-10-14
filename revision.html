@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3554"><meta name="description" content="Expediente y observaciones de investigación CILIS.">
+  <title>Expediente de investigación | CILIS Research</title>
+  <link rel="icon" type="image/jpeg" href="assets/cilis-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css"><link rel="stylesheet" href="assets/plataforma.css"><link rel="stylesheet" href="assets/revision.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3" defer></script>
+  <script src="assets/auth-config.js" defer></script><script src="assets/auth-client.js" defer></script><script src="assets/revision.js" defer></script>
+</head>
+<body class="platform-page">
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <header class="platform-header"><div class="platform-header-inner">
+    <a class="platform-brand" href="index.html" aria-label="CILIS Research"><img src="assets/cilis-logo.jpg" alt="" width="52" height="52"><span><strong>CILIS RESEARCH</strong><small>Seguimiento de investigación</small></span></a>
+    <nav aria-label="Navegación de la plataforma"><a id="back-nav" href="cuenta.html">Mis investigaciones</a><a href="index.html">Sitio web</a></nav>
+    <div class="platform-user"><span id="account-email"></span><button id="signout-button" type="button">Cerrar sesión</button></div>
+  </div></header>
+  <main id="main" class="platform-container review-main">
+    <a class="review-back" id="back-link" href="cuenta.html">← Volver al panel</a>
+    <p id="review-loading" class="platform-message" role="status" aria-live="polite">Cargando expediente...</p>
+    <div id="review-app" hidden>
+      <div class="review-heading"><div><p class="platform-kicker" id="review-kicker">INVESTIGACIÓN</p><h1 id="research-title">Investigación</h1><p id="review-subtitle"></p></div><span id="research-status" class="status-pill">Estado</span></div>
+      <div class="review-grid">
+        <div class="review-primary">
+          <section class="review-panel"><h2>Contenido de la investigación</h2><div id="research-body"></div></section>
+          <section class="review-panel" id="observations-panel"><h2>Observaciones y respuestas</h2><p class="review-help" id="thread-intro"></p><div id="messages-list" class="messages-list"></div>
+            <form id="message-form" class="review-form" hidden><label class="field"><span id="message-label">Observación</span><textarea id="message-text" maxlength="5000" required></textarea><small>Máximo 5000 caracteres.</small></label><label class="field" id="section-field"><span>Apartado</span><select id="message-section"><option value="general">General</option><option value="tipo">Tipo de artículo</option><option value="datos">Título y resumen</option><option value="autores">Autores</option><option value="declaraciones">Declaraciones</option><option value="manuscrito">Manuscrito</option><option value="referencias">Referencias</option><option value="asesores">Asesores</option><option value="archivos">Archivos</option></select></label><button class="platform-primary" type="submit" id="message-submit">Enviar observación</button></form>
+          </section>
+        </div>
+        <aside class="review-side" aria-label="Seguimiento y datos del cliente">
+          <section class="review-panel"><h2>Seguimiento</h2><dl class="review-facts"><dt>Cliente</dt><dd id="client-email">—</dd><dt>Creada</dt><dd id="created-date">—</dd><dt>Última actualización</dt><dd id="updated-date">—</dd><dt>Avance</dt><dd id="research-progress">—</dd><dt>Estado de revisión</dt><dd id="review-state">—</dd></dl>
+            <form id="review-state-form" hidden><label class="field"><span>Cambiar estado</span><select id="review-state-select"><option value="pendiente">Por revisar</option><option value="en_revision">En revisión</option><option value="ajustes_solicitados">Solicitar ajustes</option><option value="resuelto">Revisión resuelta</option></select></label><button class="platform-secondary" type="submit">Guardar estado</button></form>
+            <a id="edit-research-link" class="platform-secondary review-edit-link" href="#" hidden>Editar investigación →</a>
+          </section>
+          <section class="review-panel"><h2>Archivos adjuntos</h2><ul id="attachment-list" class="review-files"></ul></section>
+        </aside>
+      </div>
+      <p id="review-message" class="platform-message" role="status" aria-live="polite" hidden></p>
+    </div>
+  </main>
+  <footer class="platform-footer"><span>© <span id="year">2026</span> CILIS Research</span><span>Expediente privado de investigación.</span></footer>
+</body>
+</html>

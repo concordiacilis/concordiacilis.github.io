@@ -5,6 +5,7 @@ const listNode = document.getElementById('research-list');
 const emptyNode = document.getElementById('research-empty');
 const searchNode = document.getElementById('research-search');
 let investigaciones = [];
+let seguimientos = new Map();
 let filtro = 'todas';
 
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -26,8 +27,10 @@ function renderizar() {
     const fecha = new Intl.DateTimeFormat('es', {day:'numeric',month:'short',year:'numeric'}).format(new Date(item.actualizado_en));
     const titulo = escapeHtml(item.titulo || 'Investigación sin título');
     const tipo = escapeHtml(item.tipo_articulo || 'Tipo por definir');
-    const estado = item.estado === 'enviado' ? 'Enviada a CILIS' : 'Borrador';
-    return `<article class="research-card"><div class="research-card-main"><span class="research-type">${tipo}</span><h2><a href="redactar.html?id=${encodeURIComponent(item.id)}">${titulo}</a></h2><p>Actualizada el ${fecha}</p></div><div class="research-card-side"><span class="status-pill ${item.estado}">${estado}</span><a href="redactar.html?id=${encodeURIComponent(item.id)}">${item.estado === 'borrador' ? 'Continuar redacción' : 'Ver investigación'} <span aria-hidden="true">→</span></a></div></article>`;
+    const revision = seguimientos.get(item.id)?.estado;
+    const estado = item.estado === 'borrador' ? 'Borrador' : ({pendiente:'Por revisar',en_revision:'En revisión',ajustes_solicitados:'Ajustes solicitados',resuelto:'Revisión resuelta'}[revision] || 'Enviada a CILIS');
+    const destino = item.estado === 'borrador' ? `redactar.html?id=${encodeURIComponent(item.id)}` : `revision.html?id=${encodeURIComponent(item.id)}`;
+    return `<article class="research-card"><div class="research-card-main"><span class="research-type">${tipo}</span><h2><a href="${destino}">${titulo}</a></h2><p>Actualizada el ${fecha}</p></div><div class="research-card-side"><span class="status-pill ${revision || item.estado}">${estado}</span><a href="${destino}">${item.estado === 'borrador' ? 'Continuar redacción' : 'Ver revisión y observaciones'} <span aria-hidden="true">→</span></a></div></article>`;
   }).join('');
   emptyNode.hidden = visibles.length > 0;
   if (!visibles.length) {
@@ -48,13 +51,17 @@ async function iniciar() {
     const rol = user.app_metadata?.cilis_role || 'cliente';
     // El rol se obtiene de app_metadata, que solo puede modificar el servidor.
     if (rol !== 'cliente') {
-      statusNode.textContent = 'Tu cuenta tiene un rol administrativo. El panel de administración se habilitará próximamente.';
+      location.replace('revisor.html');
       return;
     }
     document.getElementById('account-email').textContent = user.email || '';
-    const { data, error } = await client.from('investigaciones').select('id,titulo,tipo_articulo,estado,actualizado_en').order('actualizado_en', {ascending:false});
-    if (error) throw error;
-    investigaciones = data || [];
+    const [researchResult,reviewResult] = await Promise.all([
+      client.from('investigaciones').select('id,titulo,tipo_articulo,estado,actualizado_en').order('actualizado_en', {ascending:false}),
+      client.from('seguimiento_revisiones').select('investigacion_id,estado')
+    ]);
+    if (researchResult.error || reviewResult.error) throw researchResult.error || reviewResult.error;
+    investigaciones = researchResult.data || [];
+    seguimientos = new Map((reviewResult.data || []).map(item => [item.investigacion_id,item]));
     statusNode.hidden = true;
     contentNode.hidden = false;
     renderizar();

@@ -17,8 +17,9 @@ const fields = document.getElementById('step-fields');
 const form = document.getElementById('research-form');
 const message = document.getElementById('form-message');
 const saveIndicator = document.getElementById('save-indicator');
-let user, researchId, estado = 'borrador', paso = 0, contenido = {};
+let user, researchId, estado = 'borrador', revisionStatus = null, paso = 0, contenido = {};
 let saveTimer, saving = Promise.resolve(), dirty = false, saveError = false;
+const canEdit = () => estado === 'borrador' || revisionStatus === 'ajustes_solicitados';
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const val = key => esc(contenido[key] || '');
@@ -54,7 +55,7 @@ function renderFields() {
       return `<div class="editor-panel"><div class="editor-note">Se aceptan PDF, Word, JPG y PNG, hasta 10 MB por archivo. Los archivos son privados.</div><div class="file-drop"><strong>Selecciona tus anexos</strong><input id="file-input" type="file" accept=".pdf,.docx,.jpg,.jpeg,.png" multiple></div><ul class="file-list">${(contenido.archivos || []).map((file,index) => `<li><a href="#" data-download="${index}">${esc(file.nombre)}</a><button type="button" data-file-remove="${index}">Quitar</button></li>`).join('')}</ul></div>`;
     case 'resumen': {
       const autores = (contenido.autores || []).map(a => a.nombre).filter(Boolean).join(', ') || 'Pendiente';
-      return `<div class="editor-panel"><div class="editor-note">Al enviar, CILIS podrá revisar tu investigación de forma privada. El envío no implica publicación ni aceptación editorial.</div><dl class="review-list"><dt>Tipo de artículo</dt><dd>${esc(contenido.tipo_articulo || 'Pendiente')}</dd><dt>Título</dt><dd>${esc(contenido.titulo || 'Pendiente')}</dd><dt>Autores</dt><dd>${esc(autores)}</dd><dt>Resumen</dt><dd>${esc(contenido.resumen || 'Pendiente')}</dd><dt>Archivos</dt><dd>${(contenido.archivos || []).length}</dd></dl>${estado === 'borrador' ? '<p class="login-availability">Antes de enviar, se comprobarán los campos esenciales.</p>' : '<p class="platform-message">Esta investigación ya fue enviada a CILIS. Puedes consultarla, pero el borrador está cerrado.</p>'}</div>`;
+      return `<div class="editor-panel"><div class="editor-note">CILIS revisa la investigación de forma privada. El envío no implica publicación.</div><dl class="review-list"><dt>Tipo de artículo</dt><dd>${esc(contenido.tipo_articulo || 'Pendiente')}</dd><dt>Título</dt><dd>${esc(contenido.titulo || 'Pendiente')}</dd><dt>Autores</dt><dd>${esc(autores)}</dd><dt>Resumen</dt><dd>${esc(contenido.resumen || 'Pendiente')}</dd><dt>Archivos</dt><dd>${(contenido.archivos || []).length}</dd></dl>${estado === 'borrador' ? '<p class="login-availability">Antes de enviar, se comprobarán los campos esenciales.</p>' : revisionStatus === 'ajustes_solicitados' ? '<p class="platform-message">Guarda los ajustes y responde al revisor desde el expediente cuando termines.</p>' : '<p class="platform-message">Esta investigación ya fue enviada a CILIS. Puedes consultarla y revisar las observaciones desde tu panel.</p>'}</div>`;
     }
   }
 }
@@ -70,22 +71,22 @@ function render() {
   document.getElementById('editor-status-pill').className = `status-pill ${estado}`;
   document.getElementById('editor-steps').innerHTML = pasos.map(([slug,label],index) => `<button type="button" data-step="${index}" class="${index === paso ? 'is-active' : ''}" ${index === paso ? 'aria-current="step"' : ''}><span>${index+1}</span>${label}</button>`).join('');
   fields.innerHTML = renderFields();
-  if (estado === 'enviado') fields.querySelectorAll('input,textarea,select,button[data-add],button[data-remove],button[data-file-remove]').forEach(control => control.disabled = true);
+  if (!canEdit()) fields.querySelectorAll('input,textarea,select,button[data-add],button[data-remove],button[data-file-remove]').forEach(control => control.disabled = true);
   document.getElementById('previous-button').disabled = paso === 0;
-  document.getElementById('save-button').hidden = estado === 'enviado';
-  document.getElementById('next-button').textContent = paso === pasos.length-1 ? (estado === 'enviado' ? 'Enviada a CILIS' : 'Enviar a CILIS →') : 'Guardar y continuar →';
-  document.getElementById('next-button').disabled = estado === 'enviado' && paso === pasos.length-1;
+  document.getElementById('save-button').hidden = !canEdit();
+  document.getElementById('next-button').textContent = paso === pasos.length-1 ? (estado === 'borrador' ? 'Enviar a CILIS →' : canEdit() ? 'Guardar ajustes y ver expediente →' : 'Enviada a CILIS') : 'Guardar y continuar →';
+  document.getElementById('next-button').disabled = !canEdit() && paso === pasos.length-1;
   showMessage('');
 }
 function markDirty() {
-  if (estado === 'enviado') return;
+  if (!canEdit()) return;
   dirty = true;
   saveIndicator.textContent = 'Cambios sin guardar';
   clearTimeout(saveTimer);
   saveTimer = setTimeout(() => { save().catch(() => {}); }, 850);
 }
 async function save() {
-  if (estado === 'enviado' || !dirty && researchId) return saving;
+  if (!canEdit() || !dirty && researchId) return saving;
   clearTimeout(saveTimer);
   const snapshot = structuredClone(contenido);
   const stepSnapshot = pasos[paso][0];
@@ -95,7 +96,7 @@ async function save() {
     const payload = {tipo_articulo:snapshot.tipo_articulo || '',titulo:snapshot.titulo || '',paso_actual:stepSnapshot,contenido:snapshot,actualizado_en:new Date().toISOString()};
     let result;
     if (!researchId) result = await db.from('investigaciones').insert({...payload,propietario_id:user.id}).select('id').single();
-    else result = await db.from('investigaciones').update(payload).eq('id',researchId).eq('estado','borrador').select('id').single();
+    else result = await db.from('investigaciones').update(payload).eq('id',researchId).eq('estado',estado).select('id').single();
     if (result.error) throw result.error;
     if (!researchId) {
       researchId = result.data.id;
@@ -114,7 +115,7 @@ async function save() {
 }
 async function goTo(index) {
   if (index < 0 || index >= pasos.length) return;
-  if (estado === 'enviado') {
+  if (!canEdit()) {
     paso = index;
     render();
     window.scrollTo({top:0,behavior:'smooth'});
@@ -135,6 +136,11 @@ function validateSend() {
   return '';
 }
 async function sendResearch() {
+  if (estado === 'enviado' && revisionStatus === 'ajustes_solicitados') {
+    try { await save(); location.assign(`revision.html?id=${encodeURIComponent(researchId)}`); }
+    catch (_) { showMessage('No se pudieron guardar los ajustes.',true); }
+    return;
+  }
   const validation = validateSend();
   if (validation) { showMessage(validation,true); return; }
   try {
@@ -197,7 +203,7 @@ form.addEventListener('click', async event => {
   }
 });
 async function uploadFiles(fileList) {
-  if (estado === 'enviado') return;
+  if (!canEdit()) return;
   const allowed = ['application/pdf','application/vnd.openxmlformats-officedocument.wordprocessingml.document','image/jpeg','image/png'];
   try {
     if (!researchId) { dirty = true; await save(); }
@@ -241,7 +247,7 @@ async function init() {
   try {
     const {data:{user:currentUser},error:authError} = await db.auth.getUser();
     if (authError || !currentUser) { location.replace('login.html'); return; }
-    if ((currentUser.app_metadata?.cilis_role || 'cliente') !== 'cliente') { location.replace('cuenta.html'); return; }
+    if ((currentUser.app_metadata?.cilis_role || 'cliente') !== 'cliente') { location.replace('revisor.html'); return; }
     user = currentUser;
     const id = new URLSearchParams(location.search).get('id');
     if (id) {
@@ -252,6 +258,11 @@ async function init() {
       estado = data.estado;
       contenido = data.contenido || {};
       paso = Math.max(0,pasos.findIndex(item => item[0] === data.paso_actual));
+      if (estado === 'enviado') {
+        const {data:followup,error:followupError} = await db.from('seguimiento_revisiones').select('estado').eq('investigacion_id',id).maybeSingle();
+        if (followupError) throw followupError;
+        revisionStatus = followup?.estado || 'pendiente';
+      }
     }
     loading.hidden = true;
     app.hidden = false;
