@@ -33,6 +33,17 @@ if (archiveDropdown && archiveMenuToggle) {
 const year = document.getElementById('year');
 if (year) year.textContent = new Date().getFullYear();
 
+const authLink = document.querySelector('.auth-link');
+const siteAuth = window.cilisAuth?.client;
+if (authLink && siteAuth && !document.body.classList.contains('page-login')) {
+  siteAuth.auth.getUser().then(({ data }) => {
+    if (!data.user) return;
+    authLink.href = 'cuenta.html';
+    authLink.querySelector('.auth-link-label').textContent = 'Mi espacio';
+    authLink.querySelector('.auth-link-short').textContent = 'Cuenta';
+  }).catch(() => {});
+}
+
 if (document.body.classList.contains('page-home')) {
   if (location.hash === '#nosotros') location.replace('nosotros.html');
   if (location.hash === '#academy') location.replace('academy.html');

@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3" defer></script>
+  <script src="assets/auth-config.js" defer></script>
+  <script src="assets/auth-client.js" defer></script>
   <script src="assets/navigation.js" defer></script>
 </head>
 <body class="page-about">
@@ -24,6 +27,7 @@
         <a href="index.html#convocatorias" data-page-transition>Convocatorias</a><a href="index.html#colaboracion" data-page-transition>Colaboración</a><a href="index.html#proceso" data-page-transition>Proceso</a><a href="academy.html" data-page-transition>CILIS ACADEMY</a><div class="nav-dropdown"><a href="archivo.html" data-page-transition>Archivo </a><button class="archive-menu-toggle" type="button" aria-label="Mostrar opciones de Archivo" aria-expanded="false" aria-controls="archive-menu">⌄</button><div class="nav-dropdown-menu" id="archive-menu"><a href="convocatorias-anteriores.html" data-page-transition>Convocatorias anteriores</a><a href="congresos-anteriores.html" data-page-transition>Congresos anteriores</a></div></div><a href="nosotros.html" aria-current="page">Nosotros</a>
         <a class="nav-cta" href="index.html#contacto" data-page-transition>Hablemos de tu proyecto <span aria-hidden="true">↗</span></a>
       </nav>
+      <a class="auth-link" href="login.html" data-page-transition><span class="auth-link-icon" aria-hidden="true">↗</span><span class="auth-link-label">Iniciar sesión</span><span class="auth-link-short">Acceder</span></a>
     </div>
   </header>
   <main id="main" class="about-main">

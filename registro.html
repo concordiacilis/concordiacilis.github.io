@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3554">
+  <meta name="description" content="Registro para la futura plataforma de CILIS Research.">
+  <title>Registrarse | CILIS RESEARCH</title>
+  <link rel="icon" type="image/jpeg" href="assets/cilis-logo.jpg">
+  <link rel="apple-touch-icon" href="assets/cilis-logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3" defer></script>
+  <script src="assets/auth-config.js" defer></script>
+  <script src="assets/auth-client.js" defer></script>
+  <script src="assets/navigation.js" defer></script>
+  <script src="assets/registro.js" defer></script>
+</head>
+<body class="page-login page-register">
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <header class="site-header" id="inicio">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html#inicio" data-page-transition aria-label="CILIS, Centro de Investigación Libre en Innovación y Salud, ir al inicio"><img class="brand-logo" src="assets/cilis-logo.jpg" alt="CILIS" width="1080" height="1080"><span class="brand-copy"><span class="brand-name">Centro de Investigación Libre en Innovación y Salud</span><span class="brand-subline">by Concordia Institute for Health Research (CIHR)</span></span></a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav"><span></span><span></span><span></span></button>
+      <nav id="main-nav" class="main-nav" aria-label="Navegación principal">
+        <a href="index.html#convocatorias" data-page-transition>Convocatorias</a><a href="index.html#colaboracion" data-page-transition>Colaboración</a><a href="index.html#proceso" data-page-transition>Proceso</a><a href="academy.html" data-page-transition>CILIS ACADEMY</a><div class="nav-dropdown"><a href="archivo.html" data-page-transition>Archivo </a><button class="archive-menu-toggle" type="button" aria-label="Mostrar opciones de Archivo" aria-expanded="false" aria-controls="archive-menu">⌄</button><div class="nav-dropdown-menu" id="archive-menu"><a href="convocatorias-anteriores.html" data-page-transition>Convocatorias anteriores</a><a href="congresos-anteriores.html" data-page-transition>Congresos anteriores</a></div></div><a href="nosotros.html" data-page-transition>Nosotros</a>
+        <a class="nav-cta" href="index.html#contacto" data-page-transition>Hablemos de tu proyecto <span aria-hidden="true">↗</span></a>
+      </nav>
+      <a class="auth-link" href="login.html" data-page-transition><span class="auth-link-icon" aria-hidden="true">↗</span><span class="auth-link-label">Iniciar sesión</span><span class="auth-link-short">Acceder</span></a>
+    </div>
+  </header>
+  <main id="main" class="login-main">
+    <div class="container login-layout">
+      <section class="login-intro" aria-labelledby="register-title">
+        <p class="eyebrow"><span class="eyebrow-line"></span> COMUNIDAD CILIS</p>
+        <h1 id="register-title">Construyamos<br><em>conocimiento juntos.</em></h1>
+        <p>Prepárate para formar parte de un espacio dedicado a la investigación, la colaboración y la formación científica.</p>
+        <div class="login-intro-rule" aria-hidden="true"></div>
+        <span class="login-intro-caption">INVESTIGACIÓN · COLABORACIÓN · FORMACIÓN</span>
+      </section>
+      <section class="login-panel" aria-labelledby="register-panel-title">
+        <div class="login-panel-top"><img src="assets/cilis-logo.jpg" alt="" width="64" height="64"><span>CREAR UNA CUENTA</span></div>
+        <h2 id="register-panel-title">Únete a CILIS.</h2>
+        <p class="login-panel-lede">Completa tus datos para crear tu cuenta CILIS.</p>
+        <form id="register-form" onsubmit="return false">
+          <label for="register-name">Nombre completo</label>
+          <input id="register-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre y apellido" required disabled>
+          <div class="login-field-gap"><label for="register-email">Correo electrónico</label></div>
+          <input id="register-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nombre@correo.com" required disabled>
+          <div class="login-field-gap"><label for="register-password">Contraseña</label></div>
+          <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo 8 caracteres" required disabled>
+          <div class="login-field-gap"><label for="register-confirm">Confirmar contraseña</label></div>
+          <input id="register-confirm" name="confirm-password" type="password" autocomplete="new-password" minlength="8" placeholder="Repite tu contraseña" required disabled>
+          <button class="button login-submit" type="submit" disabled>Registrarse <span aria-hidden="true">→</span></button>
+          <p id="register-status" class="login-status" role="status" aria-live="polite" hidden></p>
+        </form>
+        <p class="login-availability" id="register-availability" hidden></p>
+        <div class="login-register">¿Ya tienes cuenta? <a href="login.html" data-page-transition>Iniciar sesión <span aria-hidden="true">↗</span></a></div>
+        <div class="login-help">¿Necesitas información? <a href="index.html#contacto" data-page-transition>Contáctanos <span aria-hidden="true">↗</span></a></div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><div class="container footer-main"><div><a class="brand footer-brand" href="index.html#inicio" data-page-transition aria-label="CILIS, Centro de Investigación Libre en Innovación y Salud, ir al inicio"><img class="brand-logo" src="assets/cilis-logo.jpg" alt="CILIS" width="1080" height="1080"><span class="brand-copy"><span class="brand-name">Centro de Investigación Libre en Innovación y Salud</span><span class="brand-subline">by Concordia Institute for Health Research (CIHR)</span></span></a><p>Investigación médica y formación científica.</p></div><div class="footer-nav"><a href="index.html#servicios" data-page-transition>Investigación</a><a href="academy.html" data-page-transition>CILIS Academy</a><a href="archivo.html" data-page-transition>Archivo</a><a href="nosotros.html" data-page-transition>Nosotros</a><a href="index.html#contacto" data-page-transition>Contacto</a></div></div><div class="container footer-bottom"><span>© <span id="year">2026</span> CILIS RESEARCH</span><span><a href="https://ec.linkedin.com/in/jose-sucre-d%C3%A1vila-v%C3%A1squez-b0231b212" target="_blank" rel="noopener noreferrer">Dr. Jose Sucre Dávila Vásquez</a> · Fundador y director académico</span><a href="index.html#inicio" data-page-transition>Volver arriba ↑</a></div></footer>
+</body>
+</html>
